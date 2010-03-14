@@ -1,5 +1,6 @@
 module TwitterAuth
-  class GenericUser < ActiveRecord::Base
+  class GenericUser
+    include MongoMapper::Document
     attr_protected :twitter_id, :remember_token, :remember_token_expires_at
     
     TWITTER_ATTRIBUTES = [
@@ -27,7 +28,7 @@ module TwitterAuth
     with_options :if => :utilize_default_validations do |v|
       v.validates_presence_of :login, :twitter_id
       v.validates_format_of :login, :with => /\A[a-z0-9_]+\z/i
-      v.validates_length_of :login, :in => 1..15
+      v.validates_length_of :login, :within => 1..15
       v.validates_uniqueness_of :login, :case_sensitive => false
       v.validates_uniqueness_of :twitter_id, :message => "ID has already been taken."
       v.validates_uniqueness_of :remember_token, :allow_blank => true
