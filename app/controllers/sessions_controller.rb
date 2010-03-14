@@ -48,6 +48,7 @@ class SessionsController < ApplicationController
     @user = User.identify_or_create_from_access_token(@access_token)
 
     session[:user_id] = @user.id
+    session[:twitter_id] = @user.twitter_id
 
     cookies[:remember_token] = @user.remember_me
 
