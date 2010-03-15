@@ -53,7 +53,7 @@ module TwitterAuth
     end
 
     def self.from_remember_token(token)
-      first(:conditions => ["remember_token = ? AND remember_token_expires_at > ?", token, Time.now])
+      first(:remember_token => "#{token}", :remember_token_expires_at.gt => Time.now)
     end
       
     def assign_twitter_attributes(hash)
